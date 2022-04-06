@@ -41,27 +41,36 @@ namespace Register
             string sta_salt = "eChkAEq6Yx9s";
             MySqlConnection con = new MySqlConnection("Data Source=localhost;Database=eshop;User ID=root;Password=Tangratu");
             con.Open();
-            string checkuname = "select count(*) from users where username = '" + TB_logname.Text + "'";
+            string checkuname =
+                "SELECT count(*) FROM users WHERE username = '" + TB_logname.Text + "'";
             MySqlCommand com = new MySqlCommand(checkuname, con);
             int temp = Convert.ToInt32(com.ExecuteScalar().ToString());
             
             if (temp == 1)
             {
                 
-                string checkpass = "select password from users where username = '" + TB_logname.Text + "'";
-                string get_email = "select email from users where username = '" + TB_logname.Text + "'";
-                string verify = "select verified from users where username = '" + TB_logname.Text + "'";
+                string checkpass =
+                    "SELECT password FROM users WHERE username = '" + TB_logname.Text + "'";
+                string get_email =
+                    "SELECT email FROM users WHERE username = '" + TB_logname.Text + "'";
+                string verify = 
+                    "SELECT verified FROM users WHERE username = '" + TB_logname.Text + "'";
+                string id =
+                    "SELECT iduser FROM users WHERE username = '" + TB_logname.Text + "'";
                 MySqlCommand compass = new MySqlCommand(checkpass, con);
                 MySqlCommand commail = new MySqlCommand(get_email, con);
                 MySqlCommand comver = new MySqlCommand(verify, con);
+                MySqlCommand comid = new MySqlCommand(id, con);
                 string password = compass.ExecuteScalar().ToString().Replace(" ","");
                 string mail = commail.ExecuteScalar().ToString().Replace(" ", "");
                 int ver = int.Parse(comver.ExecuteScalar().ToString());
+                int uid = int.Parse(comid.ExecuteScalar().ToString());
                 con.Close();
                 if(password == Str_hash((TB_logpass.Text + sta_salt)) && ver == 1)
                 {
                     Session["U_name"] = TB_logname.Text;
                     Session["Mail"] = mail;
+                    Session["ID"] = uid.ToString(); 
                     Response.Redirect("Catalog.aspx");
                 }
                 else
@@ -70,6 +79,7 @@ namespace Register
                     {
                         Session["U_name"] = TB_logname.Text;
                         Session["Mail"] = mail;
+                        Session["ID"] = uid.ToString();
                         Response.Redirect("Verify_reg.aspx");
                     }
                     else

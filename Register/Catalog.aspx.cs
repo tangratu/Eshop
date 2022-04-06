@@ -22,15 +22,11 @@ namespace Register
         {
             if (!this.IsPostBack)
             {
-                GV_items.AllowSorting = true;
-                List<string> prods = new List<string>();
-                for (int i = 0; i < GV_items.Rows.Count; i++)
-                {
-                    prods.Add(GV_items.Rows[i].Cells[0].Text);
-                }
+                LB_user.Text = Session["U_name"].ToString();
+                //GV_items.AllowSorting = true;                
                 MySqlConnection con = new MySqlConnection("Data Source=localhost;Database=eshop;User ID=root;Password=Tangratu");
                 con.Open();
-                MySqlDataAdapter mda = new MySqlDataAdapter("select name, price, stock, imagepath from items", con);
+                MySqlDataAdapter mda = new MySqlDataAdapter("SELECT name, price, stock, imagepath FROM items", con);
                 DataTable dt = new DataTable();
                 mda.Fill(dt);
                 GV_items.DataSource = dt;
@@ -44,6 +40,7 @@ namespace Register
         {
             Session["U_name"] = null;
             Session["Mail"] = null;
+            LB_user.Text = "User";
             Response.Redirect("Login.aspx");
         }
 
@@ -58,8 +55,10 @@ namespace Register
             Session["Item_name"] = GV_items.Rows[rowid].Cells[0].Text;
             Session["Item_price"] = GV_items.Rows[rowid].Cells[1].Text;
             Session["Item_stock"] = GV_items.Rows[rowid].Cells[2].Text;            
-            string getdesc = "select description from items where name = '" + GV_items.Rows[rowid].Cells[0].Text + "'";
-            string getimg = "select imagepath from items where name = '" + GV_items.Rows[rowid].Cells[0].Text + "'";
+            string getdesc =
+                "SELECT description FROM items WHERE name = '" + GV_items.Rows[rowid].Cells[0].Text + "'";
+            string getimg =
+                "SELECT imagepath FROM items WHERE name = '" + GV_items.Rows[rowid].Cells[0].Text + "'";
             MySqlConnection con = new MySqlConnection("Data Source=localhost;Database=eshop;User ID=root;Password=Tangratu");
             MySqlCommand comimg = new MySqlCommand(getimg, con);
             con.Open();
@@ -79,7 +78,7 @@ namespace Register
         {
             MySqlConnection con = new MySqlConnection("Data Source=localhost;Database=eshop;User ID=root;Password=Tangratu");
             con.Open();
-            MySqlDataAdapter mda = new MySqlDataAdapter("select name, price, stock, imagepath from items", con);
+            MySqlDataAdapter mda = new MySqlDataAdapter("SELECT name, price, stock, imagepath FROM items", con);
             DataTable dt = new DataTable();
             mda.Fill(dt);
             con.Close();
@@ -88,6 +87,12 @@ namespace Register
             else { this.SortDirection = "ASC"; }
             dv.Sort = e.SortExpression + " " + this.SortDirection;
             GV_items.DataSource = dv;
+        }
+
+        protected void HLB_Profile_Click(object sender, EventArgs e)
+        {
+            LB_user.Text = "User";
+            Response.Redirect("User_page.aspx");
         }
     }
 }

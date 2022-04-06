@@ -116,6 +116,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Catalog.aspx" />
+    <Content Include="User_page.aspx" />
     <Content Include="Verify_email.aspx" />
     <Content Include="Verify_reg.aspx" />
     <Content Include="Web.config" />
@@ -149,6 +150,13 @@
     </Compile>
     <Compile Include="Catalog.aspx.designer.cs">
       <DependentUpon>Catalog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="User_page.aspx.cs">
+      <DependentUpon>User_page.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User_page.aspx.designer.cs">
+      <DependentUpon>User_page.aspx</DependentUpon>
     </Compile>
     <Compile Include="Verify_email.aspx.cs">
       <DependentUpon>Verify_email.aspx</DependentUpon>

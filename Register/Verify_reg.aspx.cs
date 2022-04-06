@@ -23,11 +23,13 @@ namespace Register
         {
             MySqlConnection con = new MySqlConnection("Data Source=localhost;Database=eshop;User ID=root;Password=Tangratu");
             con.Open();
-            string ver_code = "select email_code from users where username = '" + Session["U_name"].ToString() + "'";
+            string ver_code =
+                "SELECT email_code FROM users WHERE username = '" + Session["U_name"].ToString() + "'";
             MySqlCommand vercom = new MySqlCommand(ver_code, con);
             if (TB_veri.Text == vercom.ExecuteScalar().ToString())
             {
-                string update = "update users set verified = 1 where username = '" + Session["U_name"].ToString() + "'";
+                string update =
+                    "UPDATE users SET verified = 1 WHERE username = '" + Session["U_name"].ToString() + "'";
                 MySqlCommand updatecom = new MySqlCommand(update, con);
                 updatecom.ExecuteNonQuery();
                 con.Close();
@@ -52,7 +54,8 @@ namespace Register
             MySqlConnection con = new MySqlConnection("Data Source=localhost;Database=eshop;User ID=root;Password=Tangratu");
             con.Open();
             
-            string change_code = "update users set email_code = '" + ver_code.ToString() + "' where username = '" + Session["U_name"].ToString() + "'";
+            string change_code =
+                "UPDATE users SET email_code = '" + ver_code.ToString() + "' WHERE username = '" + Session["U_name"].ToString() + "'";
             MySqlCommand codecom = new MySqlCommand(change_code, con);
             
             codecom.ExecuteNonQuery();

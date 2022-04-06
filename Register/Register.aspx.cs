@@ -87,7 +87,8 @@ namespace Register
                         int ver_code = rand.Next(1000, 10000);
                         MySqlConnection con = new MySqlConnection("Data Source=localhost;Database=eshop;User ID=root;Password=Tangratu");
                         con.Open();
-                        string ins_qry = "insert into users (username,password,email,email_code) values (@uname,@pass,@mail,@code)";
+                        string ins_qry =
+                        "INSERT INTO users (username,password,email,email_code) VALUES (@uname,@pass,@mail,@code)";
                         MySqlCommand com = new MySqlCommand(ins_qry, con);
                         com.Parameters.AddWithValue("@uname", TB_uname.Text);
                         com.Parameters.AddWithValue("@pass", Str_hash((TB_pass1.Text + sta_salt)));
@@ -114,7 +115,12 @@ namespace Register
                     else
                     {
 
-                        if(!user_exi)Response.Write("Captcha incorrect, please try again.");
+                        Response.Write("Captcha incorrect, please try again.");
+                        TB_mail.Text = null;
+                        TB_pass1.Text = null;
+                        TB_pass2.Text = null;
+                        TB_uname.Text = null;
+                        TB_captcha.Text = null;
                     }
                 
             }
